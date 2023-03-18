@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj": {}
+    "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj": {}
   },
   "projects": {
-    "D:\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj": {
+    "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj",
+        "projectUniqueName": "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj",
         "projectName": "Gudulion.BackEnd",
-        "projectPath": "D:\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj",
+        "projectPath": "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj",
         "packagesPath": "C:\\Users\\Hossein\\.nuget\\packages\\",
-        "outputPath": "D:\\Gudulion.BackEnd\\Gudulion.BackEnd\\obj\\",
+        "outputPath": "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages"
@@ -48,6 +48,16 @@
               "version": "[7.0.4, )"
             },
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.4, )"
             },
