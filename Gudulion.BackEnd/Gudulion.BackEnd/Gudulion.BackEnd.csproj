@@ -22,6 +22,14 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Include="obj\Debug\net7.0\apphost.exe" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.CopyComplete" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.CoreCompileInputs.cache" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.FileListAbsolute.txt" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.dll" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.genruntimeconfig.cache" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.MvcApplicationPartsAssemblyInfo.cache" />
+      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.pdb" />
     </ItemGroup>
 
 </Project>
