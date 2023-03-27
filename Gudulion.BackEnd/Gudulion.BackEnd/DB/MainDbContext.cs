@@ -16,23 +16,27 @@ public class MainDbContext : DbContext
     public DbSet<Image> Images { get; set; }
     public DbSet<Request> Requests { get; set; }
     public DbSet<Sweet> Sweets { get; set; }
+    public DbSet<UserSweetMappign> UserSweetMappigns { get; set; }
     public DbSet<TransactionItem> TransactionItems { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<Trip> Trips { get; set; }
 
-    public MainDbContext()
+
+    public MainDbContext(DbContextOptions<MainDbContext> options)
+        : base(options)
     {
     }
 
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Gudulion;Integrated Security=True");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Request>().HasOne(a => a.FromUser).WithMany().HasForeignKey(a=>a.FromUserId).OnDelete(DeleteBehavior.NoAction);
-        modelBuilder.Entity<Request>().HasOne(a => a.ToUser).WithMany().HasForeignKey(a=>a.FromUserId).OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Request>().HasOne(a => a.FromUser).WithMany().HasForeignKey(a => a.FromUserId)
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Request>().HasOne(a => a.ToUser).WithMany().HasForeignKey(a => a.FromUserId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

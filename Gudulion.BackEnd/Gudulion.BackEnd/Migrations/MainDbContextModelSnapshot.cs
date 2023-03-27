@@ -152,6 +152,32 @@ namespace Gudulion.BackEnd.Migrations
                     b.ToTable("Sweets");
                 });
 
+            modelBuilder.Entity("Gudulion.BackEnd.Moduls.Sweet.UserSweetMappign", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsPayer")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SweetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SweetId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSweetMappigns");
+                });
+
             modelBuilder.Entity("Gudulion.BackEnd.Moduls.Transaction.Transaction", b =>
                 {
                     b.Property<int>("Id")
@@ -298,6 +324,25 @@ namespace Gudulion.BackEnd.Migrations
                     b.Navigation("FromUser");
 
                     b.Navigation("ToUser");
+                });
+
+            modelBuilder.Entity("Gudulion.BackEnd.Moduls.Sweet.UserSweetMappign", b =>
+                {
+                    b.HasOne("Gudulion.BackEnd.Moduls.Sweet.Sweet", "Sweet")
+                        .WithMany()
+                        .HasForeignKey("SweetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gudulion.BackEnd.Moduls.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sweet");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Gudulion.BackEnd.Moduls.Transaction.Transaction", b =>
