@@ -1,15 +1,19 @@
-using Gudulion.BackEnd.DB;
-using Microsoft.EntityFrameworkCore;
+using Gudulion.BackEnd.Exceprions;
+using Gudulion.BackEnd.Helpers;
+using Gudulion.BackEnd.Jwt;
+using Microsoft.AspNetCore.Diagnostics;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("HosseinConnectionString");
-builder.Services.AddDbContextFactory<MainDbContext>(options => { options.UseSqlServer(connectionString); });
-builder.Services.AddControllers();
+GlobalInjector.Inject(builder);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//add authentication 
+JwtUtils.AddAuthentication(builder);
 
 var app = builder.Build();
 
@@ -20,10 +24,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+ExceptionManager.ExceptionHandler(app);
 
+app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
