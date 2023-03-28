@@ -24,15 +24,15 @@ public class TokenGenerator
             new Claim(ClaimTypes.Role, "user")
         };
         var issuer = _configuration["Jwt:Issuer"];
-                             var audiences = _configuration.GetSection("Jwt:Audience").Get<string[]>();
+        var audiences = _configuration.GetSection("Jwt:Audience").Get<string[]>();
         var secretKey = _configuration["SecretKey"];
 
         // Create a JWT token
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
-            issuer: issuer,
-            audience: audiences[0],
+            // issuer: issuer,
+            // audience: audiences[0],
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(30),
             signingCredentials: credentials

@@ -16,12 +16,12 @@ public class JwtUtils
             {
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuers = issuers,
-                    ValidAudiences = audiences,
+                    // ValidIssuers = issuers,
+                    // ValidAudiences = audiences,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
             });
