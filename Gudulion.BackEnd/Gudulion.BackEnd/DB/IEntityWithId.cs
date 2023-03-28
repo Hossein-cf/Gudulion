@@ -1,5 +1,4 @@
-﻿
-namespace Gudulion.BackEnd.DB;
+﻿namespace Gudulion.BackEnd.DB;
 public interface IBaseEntity
 {
 }

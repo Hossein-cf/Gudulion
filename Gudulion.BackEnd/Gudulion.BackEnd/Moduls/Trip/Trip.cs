@@ -1,6 +1,8 @@
-﻿namespace Gudulion.BackEnd.Moduls.Trip;
+﻿using Gudulion.BackEnd.DB;
 
-public class Trip
+namespace Gudulion.BackEnd.Moduls.Trip;
+
+public class Trip:IEntityWithId
 {
     public int Id { get; set; }
     public DateTime StartDate { get; set; }

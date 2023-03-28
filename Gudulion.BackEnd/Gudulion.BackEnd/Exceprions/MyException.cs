@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 
-namespace Gudulion.BackEnd.Exceprions;
+namespace Sweet.BackEnd.Exceprions;
 
 public class NotFoundException : Exception
 {

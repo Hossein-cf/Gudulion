@@ -1,12 +1,11 @@
 ﻿using Gudulion.BackEnd.Controllers;
 using Gudulion.BackEnd.DB;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
-namespace Gudulion.BackEnd.Moduls.Sweet;
+namespace Gudulion.BackEnd.Moduls.Image;
 
 [Authorize]
-public class ImageController : GenericController<Sweet>
+public class ImageController : GenericController<Sweet.Sweet>
 {
     public ImageController(MainDbContext context) : base(context)
     {

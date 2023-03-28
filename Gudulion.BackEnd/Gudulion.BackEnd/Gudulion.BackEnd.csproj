@@ -35,4 +35,8 @@
       <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.pdb" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Moduls" />
+    </ItemGroup>
+
 </Project>

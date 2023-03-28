@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Gudulion.BackEnd.Jwt;
+namespace Sweet.BackEnd.Jwt;
 
 public class JwtUtils
 {

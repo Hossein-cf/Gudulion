@@ -1,4 +1,4 @@
-﻿namespace Gudulion.BackEnd.Helpers;
+﻿namespace Sweet.BackEnd.Helpers;
 
 using System.Security.Cryptography;
 using System.Text;

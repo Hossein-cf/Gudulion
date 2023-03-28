@@ -1,9 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
-using Gudulion.BackEnd.Helpers;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Net;
-using System.Security.Claims;
-using Gudulion.BackEnd.Exceprions;
+using Sweet.BackEnd.Exceprions;
+using Sweet.BackEnd.Helpers;
 
 namespace Gudulion.BackEnd.Moduls.User;
 
@@ -23,22 +20,21 @@ public class UserService : IUserService
         user.Password = _hash.HashText(user.Password);
         user.UserName = _hash.HashText(user.UserName);
         var userFromDb = _db.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
-        if (userFromDb!=null)
+        if (userFromDb != null)
         {
             throw new UserAlreadyExistException("کاربر با این نام کاربری قبلا در سیستم ثبت نام کرده است.");
         }
-        
+
         _db.Users.Add(user);
         _db.SaveChanges();
         return user;
     }
 
-    public User Login(string userName,string password)
+    public User Login(string userName, string password)
     {
-        
         var hashPass = _hash.HashText(password);
         var hashUName = _hash.HashText(userName);
-        var user=_db.Users.Where(user=>user.UserName==hashUName&&user.Password==hashPass).FirstOrDefault();
+        var user = _db.Users.Where(user => user.UserName == hashUName && user.Password == hashPass).FirstOrDefault();
         // if (user == null)
         // {
         //     throw new NotFoundException("کاربری با این مشخصات یافت نشد");

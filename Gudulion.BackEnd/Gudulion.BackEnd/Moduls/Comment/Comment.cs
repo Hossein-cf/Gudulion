@@ -1,6 +1,8 @@
-﻿namespace Gudulion.BackEnd.Moduls.Comment;
+﻿using Gudulion.BackEnd.DB;
 
-public class Comment
+namespace Gudulion.BackEnd.Moduls.Comment;
+
+public class Comment:IEntityWithId
 {
     public int Id { get; set; }
     public string Description { get; set; }

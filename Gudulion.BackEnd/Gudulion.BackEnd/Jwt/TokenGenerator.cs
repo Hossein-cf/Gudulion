@@ -4,7 +4,7 @@ using System.Text;
 using Gudulion.BackEnd.Moduls.User;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Gudulion.BackEnd.Jwt;
+namespace Sweet.BackEnd.Jwt;
 
 public class TokenGenerator
 {

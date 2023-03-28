@@ -1,13 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
 using Gudulion.BackEnd.Controllers;
 using Gudulion.BackEnd.DB;
-using Gudulion.BackEnd.Exceprions;
-using Gudulion.BackEnd.Jwt;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Sweet.BackEnd.Exceprions;
+using Sweet.BackEnd.Jwt;
 
 namespace Gudulion.BackEnd.Moduls.User;
 

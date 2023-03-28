@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿
 using Gudulion.BackEnd.DB;
 
 namespace Gudulion.BackEnd.Moduls.User;
@@ -13,6 +13,7 @@ public class User : IEntityWithId
     public string PhoneNumber { get; set; }
     public DateTime BirthDate { get; set; }
     public Gender Gender { get; set; }
+    public Role Role { get; set; }
     public int Id { get; set; }
 }
 
@@ -20,4 +21,9 @@ public enum Gender
 {
     Male,
     Female
+}
+public enum Role
+{
+    Administrator,
+    User
 }

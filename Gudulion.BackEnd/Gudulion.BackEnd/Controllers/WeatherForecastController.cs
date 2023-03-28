@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gudulion.BackEnd.Controllers;
+namespace Sweet.BackEnd.Controllers;
 
 [ApiController]
 [Route("[controller]")]

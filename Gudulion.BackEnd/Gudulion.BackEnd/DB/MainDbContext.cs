@@ -15,7 +15,7 @@ public class MainDbContext : DbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Request> Requests { get; set; }
-    public DbSet<Sweet> Sweets { get; set; }
+    public DbSet<Gudulion.BackEnd.Moduls.Sweet.Sweet> Sweets { get; set; }
     public DbSet<UserSweetMappign> UserSweetMappigns { get; set; }
     public DbSet<TransactionItem> TransactionItems { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
@@ -25,11 +25,13 @@ public class MainDbContext : DbContext
     public MainDbContext(DbContextOptions<MainDbContext> options)
         : base(options)
     {
+        Database.Migrate();
     }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

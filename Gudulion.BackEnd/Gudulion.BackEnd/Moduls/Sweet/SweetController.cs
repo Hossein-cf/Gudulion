@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 namespace Gudulion.BackEnd.Moduls.Sweet;
 
 [Authorize]
-public class TransactionController : GenericController<Transaction.Transaction>
+public class SweetController : GenericController<Sweet>
 {
-    public TransactionController(MainDbContext context) : base(context)
+    public SweetController(MainDbContext context) : base(context)
     {
     }
 }

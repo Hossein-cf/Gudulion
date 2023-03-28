@@ -1,6 +1,8 @@
-﻿namespace Gudulion.BackEnd.Moduls.Sweet;
+﻿using Gudulion.BackEnd.DB;
 
-public class Sweet
+namespace Gudulion.BackEnd.Moduls.Sweet;
+
+public class Sweet:IEntityWithId
 {
     public int Id { get; set; }
     public string Name { get; set; }

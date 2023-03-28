@@ -1,6 +1,8 @@
-﻿namespace Gudulion.BackEnd.Moduls.Transaction;
+﻿using Gudulion.BackEnd.DB;
 
-public class Transaction
+namespace Gudulion.BackEnd.Moduls.Transaction;
+
+public class Transaction : IEntityWithId
 {
     public int Id { get; set; }
     public int UserId { get; set; }

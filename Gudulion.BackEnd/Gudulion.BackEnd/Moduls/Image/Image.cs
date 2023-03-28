@@ -1,6 +1,8 @@
-﻿namespace Gudulion.BackEnd.Moduls.Image;
+﻿using Gudulion.BackEnd.DB;
 
-public class Image
+namespace Gudulion.BackEnd.Moduls.Image;
+
+public class Image:IEntityWithId
 {
     public int Id { get; set; }
     public string path { get; set; }

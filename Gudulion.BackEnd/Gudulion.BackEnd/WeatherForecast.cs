@@ -1,4 +1,4 @@
-namespace Gudulion.BackEnd;
+namespace Sweet.BackEnd;
 
 public class WeatherForecast
 {

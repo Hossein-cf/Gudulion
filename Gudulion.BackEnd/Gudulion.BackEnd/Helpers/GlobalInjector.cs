@@ -1,9 +1,8 @@
 ﻿using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Moduls.User;
-using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
-namespace Gudulion.BackEnd.Helpers;
+namespace Sweet.BackEnd.Helpers;
 
 public class GlobalInjector
 {

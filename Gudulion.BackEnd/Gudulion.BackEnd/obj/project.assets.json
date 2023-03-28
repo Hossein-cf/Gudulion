@@ -3995,30 +3995,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hossein\\.nuget\\packages\\": {},
-    "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages": {}
+    "/home/hossein/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj",
+      "projectUniqueName": "/home/hossein/Desktop/projects/Gudulion/Gudulion.BackEnd/Gudulion.BackEnd/Gudulion.BackEnd.csproj",
       "projectName": "Gudulion.BackEnd",
-      "projectPath": "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\Gudulion.BackEnd.csproj",
-      "packagesPath": "C:\\Users\\Hossein\\.nuget\\packages\\",
-      "outputPath": "D:\\Gudulion\\Gudulion.BackEnd\\Gudulion.BackEnd\\obj\\",
+      "projectPath": "/home/hossein/Desktop/projects/Gudulion/Gudulion.BackEnd/Gudulion.BackEnd/Gudulion.BackEnd.csproj",
+      "packagesPath": "/home/hossein/.nuget/packages/",
+      "outputPath": "/home/hossein/Desktop/projects/Gudulion/Gudulion.BackEnd/Gudulion.BackEnd/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Hossein\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config"
+        "/home/hossein/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4091,7 +4085,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
       }
     }
   }

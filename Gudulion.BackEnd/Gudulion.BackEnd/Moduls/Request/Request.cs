@@ -1,6 +1,8 @@
-﻿namespace Gudulion.BackEnd.Moduls.Request;
+﻿using Gudulion.BackEnd.DB;
 
-public class Request
+namespace Gudulion.BackEnd.Moduls.Request;
+
+public class Request:IEntityWithId
 {
     public int Id { get; set; }
     public int FromUserId { get; set; }
