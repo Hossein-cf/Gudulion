@@ -21,7 +21,7 @@ public class TokenGenerator
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Role, "user")
+            new Claim(ClaimTypes.Role, user.Role.ToString())
         };
         var issuer = _configuration["Jwt:Issuer"];
         var audiences = _configuration.GetSection("Jwt:Audience").Get<string[]>();

@@ -24,6 +24,6 @@ public enum Gender
 }
 public enum Role
 {
-    Administrator,
-    User
+    GroupAdmin,
+    GroupUser
 }

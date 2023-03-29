@@ -6,6 +6,7 @@ using Gudulion.BackEnd.Moduls.Transaction;
 using Gudulion.BackEnd.Moduls.Trip;
 using Gudulion.BackEnd.Moduls.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gudulion.BackEnd.DB;
 
@@ -31,7 +32,6 @@ public class MainDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,5 +40,9 @@ public class MainDbContext : DbContext
             .OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<Request>().HasOne(a => a.ToUser).WithMany().HasForeignKey(a => a.FromUserId)
             .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder
+            .Entity<User>()
+            .Property(d => d.Role)
+            .HasConversion(new EnumToStringConverter<Role>());
     }
 }

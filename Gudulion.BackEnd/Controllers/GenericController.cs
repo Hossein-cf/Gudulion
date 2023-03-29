@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gudulion.BackEnd.Controllers;
-[Route("api/[controller]")]
+
+[Route("api/[controller]/[action]")]
 [ApiController]
-public class GenericController<T> : ControllerBase where T : class,IEntityWithId
+public class GenericController<T> : ControllerBase where T : class, IEntityWithId
 {
     private readonly DbContext _context;
 
@@ -15,9 +16,9 @@ public class GenericController<T> : ControllerBase where T : class,IEntityWithId
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<T>>> GetAll()
+    public async Task<ActionResult<IEnumerable<T>>> GetAll([FromQuery] int pageSize, [FromQuery] int pageNumber)
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _context.Set<T>().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
     [HttpGet("{id}")]
@@ -34,12 +35,12 @@ public class GenericController<T> : ControllerBase where T : class,IEntityWithId
     }
 
     [HttpPost]
-    public async Task<ActionResult<T>> Create(T entity)
+    public virtual async Task<ActionResult<T>> Create(T entity)
     {
         _context.Set<T>().Add(entity);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
+        return entity;
     }
 
     [HttpPut("{id}")]
