@@ -2,10 +2,10 @@
 using Gudulion.BackEnd.DB;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Gudulion.BackEnd.Moduls.Sweet;
+namespace Gudulion.BackEnd.Moduls.Transaction;
 
 [Authorize]
-public class TransactionController : GenericController<Transaction.Transaction>
+public class TransactionController : GenericController<Transaction>
 {
     public TransactionController(MainDbContext context) : base(context)
     {

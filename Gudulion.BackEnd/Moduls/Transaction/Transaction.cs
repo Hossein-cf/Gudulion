@@ -7,17 +7,22 @@ public class Transaction : IEntityWithId
     public int Id { get; set; }
     public int UserId { get; set; }
     public User.User User { get; set; }
-
     public int TripId { get; set; }
     public Trip.Trip Trip { get; set; }
-
     public List<TransactionItem> TransactionItems { get; set; }
+    public TransactionStatus TransactionStatus { get; set; }
 }
 
-public class TransactionItem
+public class TransactionItem : IEntityWithId
 {
     public int Id { get; set; }
     public int TransactionId { get; set; }
     public string Title { get; set; }
     public decimal Amount { get; set; }
+}
+
+public enum TransactionStatus
+{
+    Draft = 0,
+    Confirmed,
 }

@@ -4,6 +4,7 @@ using Gudulion.BackEnd.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gudulion.BackEnd.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230329091826_changeUserRoleType")]
+    partial class changeUserRoleType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,16 +64,15 @@ namespace Gudulion.BackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImageType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RelatedEntityType")
+                    b.Property<int>("EntityId")
                         .HasColumnType("int");
+
+                    b.Property<int>("EntityType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -187,9 +189,6 @@ namespace Gudulion.BackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("TransactionStatus")
-                        .HasColumnType("int");
-
                     b.Property<int>("TripId")
                         .HasColumnType("int");
 
@@ -252,13 +251,6 @@ namespace Gudulion.BackEnd.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Trips");
@@ -297,11 +289,16 @@ namespace Gudulion.BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TripId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TripId");
 
                     b.ToTable("Users");
                 });
@@ -383,9 +380,21 @@ namespace Gudulion.BackEnd.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Gudulion.BackEnd.Moduls.User.User", b =>
+                {
+                    b.HasOne("Gudulion.BackEnd.Moduls.Trip.Trip", null)
+                        .WithMany("Users")
+                        .HasForeignKey("TripId");
+                });
+
             modelBuilder.Entity("Gudulion.BackEnd.Moduls.Transaction.Transaction", b =>
                 {
                     b.Navigation("TransactionItems");
+                });
+
+            modelBuilder.Entity("Gudulion.BackEnd.Moduls.Trip.Trip", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

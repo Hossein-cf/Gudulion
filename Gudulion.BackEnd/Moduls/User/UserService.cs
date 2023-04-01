@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 using Sweet.BackEnd.Exceprions;
-using Sweet.BackEnd.Helpers;
+using Gudulion.BackEnd.Helpers;
 
 namespace Gudulion.BackEnd.Moduls.User;
 

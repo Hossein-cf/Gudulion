@@ -35,16 +35,16 @@ public class GenericController<T> : ControllerBase where T : class, IEntityWithI
     }
 
     [HttpPost]
-    public virtual async Task<ActionResult<T>> Create(T entity)
+    public virtual ActionResult<T> Create(T entity)
     {
         _context.Set<T>().Add(entity);
-        await _context.SaveChangesAsync();
+        _context.SaveChangesAsync();
 
         return entity;
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<T>> Update(int id, T entity)
+    public virtual async Task<ActionResult<T>> Update(int id, T entity)
     {
         if (id != entity.Id)
         {
@@ -58,7 +58,7 @@ public class GenericController<T> : ControllerBase where T : class, IEntityWithI
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<T>> Delete(int id)
+    public virtual async Task<ActionResult<T>> Delete(int id)
     {
         var entity = await _context.Set<T>().FindAsync(id);
 

@@ -1,0 +1,32 @@
+@startuml
+title Login
+fork
+:login;
+:enter login information;
+if(Validation) then(<color:green> without error)
+    if(user exist?) then(<color:green> yes)
+        :verify authentication;
+    else (<color:reed> no)
+        :return user not found;
+    endif
+else(<color:red> with error)
+:return validation error;  
+@enduml
+
+@startuml
+title Register
+fork
+:Register;
+:enter user information;
+if(Validation) then(<color:green> without error)
+    if(user exist?) then(<color:green> yes)
+        :return user exist and you cant 
+        register with this user name ;
+    else (<color:reed> no)
+        :register user and
+        return success response;
+    endif
+else(<color:red> with error)
+:return validation error;  
+
+@enduml

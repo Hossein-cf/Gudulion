@@ -1,7 +1,6 @@
 using Sweet.BackEnd.Exceprions;
-using Sweet.BackEnd.Helpers;
+using Gudulion.BackEnd.Helpers;
 using Sweet.BackEnd.Jwt;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
 
 
@@ -39,6 +38,7 @@ builder.Services.AddSwaggerGen(opt =>
         }
     });
 });
+
 //add authentication 
 JwtUtils.AddAuthentication(builder);
 
@@ -58,6 +58,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 app.Run();

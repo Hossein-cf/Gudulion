@@ -2,16 +2,20 @@
 
 namespace Gudulion.BackEnd.Moduls.Image;
 
-public class Image:IEntityWithId
+public class Image : IEntityWithId
 {
     public int Id { get; set; }
-    public string path { get; set; }
-    public int EntityId { get; set; }
-    public EntityType EntityType { get; set; }
+    public string Name { get; set; }
+    public string ImageType { get; set; }
+    
+    public RelatedEntityType RelatedEntityType { get; set; }
 }
 
-public enum EntityType
+
+
+public enum RelatedEntityType
 {
     User,
-    Sweet
+    Sweet,
+    Trip,
 }
