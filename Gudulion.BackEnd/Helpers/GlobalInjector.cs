@@ -1,9 +1,10 @@
-﻿using Gudulion.BackEnd.DB;
+﻿using AutoMapper;
+using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Moduls.Image;
 using Gudulion.BackEnd.Moduls.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace Sweet.BackEnd.Helpers;
-
+namespace Gudulion.BackEnd.Helpers;
 public class GlobalInjector
 {
     public static void Inject(WebApplicationBuilder builder)
@@ -14,5 +15,7 @@ public class GlobalInjector
 
         builder.Services.AddScoped<IHash, Hash>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IImageService, ImageService>();
+        // builder.Services.AddScoped<IMapper, MyMapper>();
     }
 }

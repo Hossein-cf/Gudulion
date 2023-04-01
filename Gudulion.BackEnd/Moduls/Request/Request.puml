@@ -1,0 +1,10 @@
+@startuml
+title request 
+fork
+:request;
+if (sweet) is (yes) then
+  :true;
+else (no)
+  :false;
+endif
+@enduml

@@ -2,7 +2,7 @@
 
 namespace Gudulion.BackEnd.Moduls.Sweet;
 
-public class Sweet:IEntityWithId
+public class Sweet : IEntityWithId
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -25,4 +25,7 @@ public class UserSweetMappign
 
 public enum SweetType
 {
+    Sweet = 0,
+    Xorma,
+    Gheramat,
 }

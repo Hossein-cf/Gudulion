@@ -61,15 +61,16 @@ namespace Gudulion.BackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EntityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EntityType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("path")
+                    b.Property<string>("ImageType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RelatedEntityType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -186,6 +187,9 @@ namespace Gudulion.BackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("TransactionStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("TripId")
                         .HasColumnType("int");
 
@@ -248,6 +252,13 @@ namespace Gudulion.BackEnd.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Trips");
@@ -286,16 +297,11 @@ namespace Gudulion.BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TripId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TripId");
 
                     b.ToTable("Users");
                 });
@@ -377,21 +383,9 @@ namespace Gudulion.BackEnd.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Gudulion.BackEnd.Moduls.User.User", b =>
-                {
-                    b.HasOne("Gudulion.BackEnd.Moduls.Trip.Trip", null)
-                        .WithMany("Users")
-                        .HasForeignKey("TripId");
-                });
-
             modelBuilder.Entity("Gudulion.BackEnd.Moduls.Transaction.Transaction", b =>
                 {
                     b.Navigation("TransactionItems");
-                });
-
-            modelBuilder.Entity("Gudulion.BackEnd.Moduls.Trip.Trip", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

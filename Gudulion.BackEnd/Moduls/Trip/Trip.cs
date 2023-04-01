@@ -2,12 +2,31 @@
 
 namespace Gudulion.BackEnd.Moduls.Trip;
 
-public class Trip:IEntityWithId
+public class Trip : IEntityWithId
 {
     public int Id { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string Location { get; set; }
     public string Description { get; set; }
-    public List<User.User> Users { get; set; }
+    public string Title { get; set; }
+    // public List<Comment.Comment> Comments { get; set; }
+    // public List<Image.Image> Images { get; set; }
+    public TripStatus Status { get; set; }
+}
+
+public class UserTripMapping : IEntityWithId
+{
+    public int Id { get; set; }
+    public int UserIs { get; set; }
+    public User.User User { get; set; }
+    public int TrapId { get; set; }
+    public Trip Trip { get; set; }
+}
+
+public enum TripStatus
+{
+    Created = 0,
+    Started,
+    Finished,
 }
