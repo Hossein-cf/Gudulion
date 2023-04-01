@@ -1,9 +1,10 @@
 ﻿using Gudulion.BackEnd.Controllers;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Moduls.User.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gudulion.BackEnd.Moduls.User;
+namespace Gudulion.BackEnd.Moduls.User.Controller ;
 
 [Authorize]
 public class UserController : GenericController<User>

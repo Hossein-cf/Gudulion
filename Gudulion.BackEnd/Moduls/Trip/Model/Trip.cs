@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 
-namespace Gudulion.BackEnd.Moduls.Trip;
+namespace Gudulion.BackEnd.Moduls.Trip.Model;
 
 public class Trip : IEntityWithId
 {

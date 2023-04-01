@@ -1,8 +1,8 @@
-using AutoMapper;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Moduls.Image.DTO;
 using Sweet.BackEnd.Exceprions;
 
-namespace Gudulion.BackEnd.Moduls.Image;
+namespace Gudulion.BackEnd.Moduls.Image.Service;
 
 public class ImageService : IImageService
 {
@@ -13,11 +13,11 @@ public class ImageService : IImageService
         _dbContext = dbContext;
     }
 
-    public Image Save(ImageWithData imageWithData)
+    public Model.Image Save(ImageWithData imageWithData)
     {
         try
         {
-            var image = new Image();
+            var image = new Model.Image();
             image.ImageType = imageWithData.ImageType;
             image.RelatedEntityType = imageWithData.RelatedEntityType;
             image.Name = $"{Guid.NewGuid()}{GetImageSuffix(image.ImageType)}";
@@ -112,7 +112,7 @@ public class ImageService : IImageService
 
 public interface IImageService
 {
-    public Image Save(ImageWithData image);
+    public Model.Image Save(ImageWithData image);
     public ImageWithData Get(ImageEntity imageEntity);
     public void Delete(ImageEntity imageEntity);
 }

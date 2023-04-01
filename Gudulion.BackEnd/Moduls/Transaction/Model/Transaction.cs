@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 
-namespace Gudulion.BackEnd.Moduls.Transaction;
+namespace Gudulion.BackEnd.Moduls.Transaction.Model;
 
 public class Transaction : IEntityWithId
 {
@@ -8,7 +8,7 @@ public class Transaction : IEntityWithId
     public int UserId { get; set; }
     public User.User User { get; set; }
     public int TripId { get; set; }
-    public Trip.Trip Trip { get; set; }
+    public Trip.Model.Trip Trip { get; set; }
     public List<TransactionItem> TransactionItems { get; set; }
     public TransactionStatus TransactionStatus { get; set; }
 }

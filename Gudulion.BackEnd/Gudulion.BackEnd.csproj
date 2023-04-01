@@ -39,6 +39,17 @@
     <ItemGroup>
       <Folder Include="Assets\Images" />
       <Folder Include="Moduls" />
+      <Folder Include="Moduls\Comment\DTO" />
+      <Folder Include="Moduls\Comment\Service" />
+      <Folder Include="Moduls\Request\DTO" />
+      <Folder Include="Moduls\Request\Service" />
+      <Folder Include="Moduls\Sweet\DTO" />
+      <Folder Include="Moduls\Sweet\Service" />
+      <Folder Include="Moduls\Transaction\DTO" />
+      <Folder Include="Moduls\Transaction\Service" />
+      <Folder Include="Moduls\Trip\DTO" />
+      <Folder Include="Moduls\Trip\Service" />
+      <Folder Include="Moduls\User\DTO" />
     </ItemGroup>
 
 </Project>

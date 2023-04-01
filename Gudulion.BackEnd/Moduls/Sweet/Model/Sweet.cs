@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 
-namespace Gudulion.BackEnd.Moduls.Sweet;
+namespace Gudulion.BackEnd.Moduls.Sweet.Model;
 
 public class Sweet : IEntityWithId
 {

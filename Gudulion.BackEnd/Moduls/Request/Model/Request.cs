@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 
-namespace Gudulion.BackEnd.Moduls.Request;
+namespace Gudulion.BackEnd.Moduls.Request.Model;
 
 public class Request:IEntityWithId
 {

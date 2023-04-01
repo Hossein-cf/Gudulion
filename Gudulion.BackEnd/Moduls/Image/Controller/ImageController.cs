@@ -1,11 +1,12 @@
 ﻿using Gudulion.BackEnd.Controllers;
 using Gudulion.BackEnd.DB;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Gudulion.BackEnd.Moduls.Image.DTO;
+using Gudulion.BackEnd.Moduls.Image.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Gudulion.BackEnd.Moduls.Image;
+namespace Gudulion.BackEnd.Moduls.Image.Controller;
 
-public class ImageController : GenericController<Sweet.Sweet>
+public class ImageController : GenericController<Sweet.Model.Sweet>
 {
     private readonly IImageService _imageService;
 

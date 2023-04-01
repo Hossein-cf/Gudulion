@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Moduls.Image;
+using Gudulion.BackEnd.Moduls.Image.Service;
 using Gudulion.BackEnd.Moduls.User;
+using Gudulion.BackEnd.Moduls.User.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gudulion.BackEnd.Helpers;

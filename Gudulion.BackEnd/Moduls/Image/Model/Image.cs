@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 
-namespace Gudulion.BackEnd.Moduls.Image;
+namespace Gudulion.BackEnd.Moduls.Image.Model;
 
 public class Image : IEntityWithId
 {
@@ -10,8 +10,6 @@ public class Image : IEntityWithId
     
     public RelatedEntityType RelatedEntityType { get; set; }
 }
-
-
 
 public enum RelatedEntityType
 {

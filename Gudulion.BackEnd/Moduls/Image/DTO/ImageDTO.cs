@@ -1,4 +1,6 @@
-namespace Gudulion.BackEnd.Moduls.Image;
+using Gudulion.BackEnd.Moduls.Image.Model;
+
+namespace Gudulion.BackEnd.Moduls.Image.DTO;
 
 public class ImageWithData 
 {

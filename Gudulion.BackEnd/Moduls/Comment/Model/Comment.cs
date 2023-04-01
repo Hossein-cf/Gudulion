@@ -1,6 +1,6 @@
 ﻿using Gudulion.BackEnd.DB;
 
-namespace Gudulion.BackEnd.Moduls.Comment;
+namespace Gudulion.BackEnd.Moduls.Comment.Model;
 
 public class Comment:IEntityWithId
 {

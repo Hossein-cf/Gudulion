@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Gudulion.BackEnd.Moduls.Sweet;
+namespace Gudulion.BackEnd.Moduls.Trip.Controller;
 
 [Authorize]
-public class TripController : GenericController<Trip.Trip>
+public class TripController : GenericController<Trip.Model.Trip>
 {
     private readonly MainDbContext _context;
 
@@ -18,7 +18,7 @@ public class TripController : GenericController<Trip.Trip>
 
     [HttpPost]
     [Authorize(Roles = "GroupAdmin")]
-    public override ActionResult<Trip.Trip> Create(Trip.Trip entity)
+    public override ActionResult<Trip.Model.Trip> Create(Trip.Model.Trip entity)
     {
         return base.Create(entity);
     }
@@ -31,14 +31,14 @@ public class TripController : GenericController<Trip.Trip>
     /// <returns></returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "GroupAdmin")]
-    public override async Task<ActionResult<Trip.Trip>> Update(int id, Trip.Trip entity)
+    public override async Task<ActionResult<Trip.Model.Trip>> Update(int id, Trip.Model.Trip entity)
     {
         return await base.Update(id, entity);
     }
 
     [HttpDelete("{id}")]
     [Authorize(Roles = "GroupAdmin")]
-    public override async Task<ActionResult<Trip.Trip>> Delete(int id)
+    public override async Task<ActionResult<Trip.Model.Trip>> Delete(int id)
     {
         return await base.Delete(id);
     }

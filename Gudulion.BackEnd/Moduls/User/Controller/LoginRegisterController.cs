@@ -1,14 +1,15 @@
 using System.IdentityModel.Tokens.Jwt;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Moduls.User.Service;
 using Microsoft.AspNetCore.Mvc;
 using Sweet.BackEnd.Exceprions;
 using Sweet.BackEnd.Jwt;
 
-namespace Gudulion.BackEnd.Moduls.User;
+namespace Gudulion.BackEnd.Moduls.User.Controller;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class LoginRegister : Controller
+public class LoginRegister : ControllerBase
 {
     private readonly IUserService _userService;
 

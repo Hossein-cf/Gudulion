@@ -1,8 +1,8 @@
 ﻿using Gudulion.BackEnd.DB;
-using Sweet.BackEnd.Exceprions;
 using Gudulion.BackEnd.Helpers;
+using Sweet.BackEnd.Exceprions;
 
-namespace Gudulion.BackEnd.Moduls.User;
+namespace Gudulion.BackEnd.Moduls.User.Service;
 
 public class UserService : IUserService
 {
