@@ -22,8 +22,9 @@ public class MainDbContext : DbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Request> Requests { get; set; }
+    public DbSet<UserRequestMapping> RequestMappings { get; set; }
     public DbSet<Moduls.Sweet.Model.Sweet> Sweets { get; set; }
-    public DbSet<UserSweetMappign> UserSweetMappigns { get; set; }
+    public DbSet<UserSweetMapping> UserSweetMappigns { get; set; }
     public DbSet<TransactionItem> TransactionItems { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<Trip> Trips { get; set; }
@@ -32,7 +33,8 @@ public class MainDbContext : DbContext
     public MainDbContext(DbContextOptions<MainDbContext> options)
         : base(options)
     {
-        Database.Migrate();
+        // Database.Migrate();
+        Database.EnsureCreated();
     }
 
 

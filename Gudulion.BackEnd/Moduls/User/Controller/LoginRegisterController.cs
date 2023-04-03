@@ -30,11 +30,11 @@ public class LoginRegister : ControllerBase
     {
         var user = _userService.Login(userName, password);
 
-        // Validate username and password
-        if (user == null)
-        {
-            throw new UnauthorizedException("Invalid username or password");
-        }
+        // // Validate username and password
+        // if (user == null)
+        // {
+        //     throw new UnauthorizedException("Invalid username or password");
+        // }
 
 
         var token = new TokenGenerator(configuration).Generate(user);

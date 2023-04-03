@@ -6,16 +6,20 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
     </PropertyGroup>
-
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
@@ -23,33 +27,27 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-      <Content Include="obj\Debug\net7.0\apphost.exe" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.CopyComplete" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.CoreCompileInputs.cache" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.FileListAbsolute.txt" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.dll" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.genruntimeconfig.cache" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.MvcApplicationPartsAssemblyInfo.cache" />
-      <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.pdb" />
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+        <Content Include="obj\Debug\net7.0\apphost.exe" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.CopyComplete" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.CoreCompileInputs.cache" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.csproj.FileListAbsolute.txt" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.dll" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.genruntimeconfig.cache" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.MvcApplicationPartsAssemblyInfo.cache" />
+        <Content Include="obj\Debug\net7.0\Gudulion.BackEnd.pdb" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Assets\Images" />
-      <Folder Include="Moduls" />
-      <Folder Include="Moduls\Comment\DTO" />
-      <Folder Include="Moduls\Comment\Service" />
-      <Folder Include="Moduls\Request\DTO" />
-      <Folder Include="Moduls\Request\Service" />
-      <Folder Include="Moduls\Sweet\DTO" />
-      <Folder Include="Moduls\Sweet\Service" />
-      <Folder Include="Moduls\Transaction\DTO" />
-      <Folder Include="Moduls\Transaction\Service" />
-      <Folder Include="Moduls\Trip\DTO" />
-      <Folder Include="Moduls\Trip\Service" />
-      <Folder Include="Moduls\User\DTO" />
+        <Folder Include="Assets\Images" />
+        <Folder Include="Migrations" />
+        <Folder Include="Moduls" />
+        <Folder Include="Moduls\Transaction\DTO" />
+        <Folder Include="Moduls\Transaction\Service" />
+        <Folder Include="Moduls\Trip\DTO" />
+        <Folder Include="Moduls\User\DTO" />
     </ItemGroup>
 
 </Project>

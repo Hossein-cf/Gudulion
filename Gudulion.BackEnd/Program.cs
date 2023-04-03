@@ -1,7 +1,9 @@
+using System.Reflection;
 using Sweet.BackEnd.Exceprions;
 using Gudulion.BackEnd.Helpers;
 using Sweet.BackEnd.Jwt;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +39,10 @@ builder.Services.AddSwaggerGen(opt =>
             new string[]{}
         }
     });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
+    // opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 });
 
 //add authentication 
