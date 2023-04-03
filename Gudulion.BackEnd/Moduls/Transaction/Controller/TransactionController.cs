@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Gudulion.BackEnd.Moduls.Transaction.Controller;
 
-[Authorize]
+[Authorize(Roles = "GroupAdmin")]
 public class TransactionController : GenericController<Model.Transaction>
 {
     public TransactionController(MainDbContext context) : base(context)

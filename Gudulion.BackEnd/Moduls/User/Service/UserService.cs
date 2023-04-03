@@ -1,4 +1,5 @@
-﻿using Gudulion.BackEnd.DB;
+﻿using System.Security.Claims;
+using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Helpers;
 using Sweet.BackEnd.Exceprions;
 
@@ -6,27 +7,29 @@ namespace Gudulion.BackEnd.Moduls.User.Service;
 
 public class UserService : IUserService
 {
-    private readonly MainDbContext _db;
+    private readonly MainDbContext db;
     private readonly IHash _hash;
+    private readonly IHttpContextAccessor httpContext;
 
-    public UserService(MainDbContext db, IHash hash)
+    public UserService(MainDbContext context, IHash hash,IHttpContextAccessor httpContextAccessor)
     {
-        _db = db;
+        db = context;
         _hash = hash;
+        httpContext = httpContextAccessor;
     }
 
     public User Register(User user)
     {
         user.Password = _hash.HashText(user.Password);
         user.UserName = _hash.HashText(user.UserName);
-        var userFromDb = _db.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
+        var userFromDb = db.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
         if (userFromDb != null)
         {
             throw new UserAlreadyExistException("کاربر با این نام کاربری قبلا در سیستم ثبت نام کرده است.");
         }
 
-        _db.Users.Add(user);
-        _db.SaveChanges();
+        db.Users.Add(user);
+        db.SaveChanges();
         return user;
     }
 
@@ -34,11 +37,20 @@ public class UserService : IUserService
     {
         var hashPass = _hash.HashText(password);
         var hashUName = _hash.HashText(userName);
-        var user = _db.Users.Where(user => user.UserName == hashUName && user.Password == hashPass).FirstOrDefault();
-        // if (user == null)
-        // {
-        //     throw new NotFoundException("کاربری با این مشخصات یافت نشد");
-        // }
+        var user = db.Users.FirstOrDefault(user => user.UserName == hashUName && user.Password == hashPass);
+        if (user == null)
+        {
+            throw new NotFoundException("User not found");
+        }
+
+        return user;
+    }
+
+    public User GetCurrentUser()
+    {
+        var identity = httpContext.HttpContext.User.Identity as ClaimsIdentity;
+        var userName = identity.FindFirst(ClaimTypes.Name)?.Value;
+        var user = db.Users.FirstOrDefault(a => a.UserName == userName);
         return user;
     }
 }
@@ -47,4 +59,5 @@ public interface IUserService
 {
     public User Register(User user);
     public User Login(string userName, string password);
+    public User GetCurrentUser();
 }
