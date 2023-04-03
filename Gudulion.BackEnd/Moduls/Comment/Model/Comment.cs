@@ -9,11 +9,12 @@ public class Comment:IEntityWithId
     public DateTime Date { get; set; }
     public int UserId { get; set; }
     public User.User User { get; set; }
-    public EntityType EntityType { get; set; }
-    public int EntityId { get; set; }
+    public CommentEntityType CommentEntityType { get; set; }
+    public int EntityId { get; set; } 
+    
 }
 
-public enum EntityType
+public enum CommentEntityType
 {
     Trip,
     Request
