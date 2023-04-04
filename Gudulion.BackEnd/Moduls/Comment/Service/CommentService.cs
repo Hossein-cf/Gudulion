@@ -26,7 +26,7 @@ public class CommentService : ICommentService
         {
             Description = dto.CommentMessage,
             UserId = dto.UserId,
-            Date = new DateTime(),
+            Date =  DateTime.Now,
             CommentEntityType = dto.EntityType,
             EntityId = dto.EntityId,
         };

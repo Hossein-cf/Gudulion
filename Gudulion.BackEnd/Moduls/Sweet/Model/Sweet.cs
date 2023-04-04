@@ -7,11 +7,14 @@ public class Sweet : IEntityWithId
     public int Id { get; set; }
     public string Title { get; set; }
     public string Occasion { get; set; }
-    public string trackingCode { get; set; }
+    public string? TrackingCode { get; set; }
     public SweetType Type { get; set; }
     public DateTime AddDate { get; set; }
     public DateTime PayDate { get; set; }
     public SweetStatus Status { get; set; }
+
+    public Request.Model.Request Request { get; set; }
+    public int RequestId { get; set; }
 }
 
 public class UserSweetMapping
@@ -22,8 +25,7 @@ public class UserSweetMapping
     public int SweetId { get; set; }
     public Sweet Sweet { get; set; }
     public bool IsPayer { get; set; }
-    public SweetAcceptance Acceptance { get; set; } 
-
+    public SweetAcceptance Acceptance { get; set; }
 }
 
 public enum SweetType
@@ -35,14 +37,17 @@ public enum SweetType
 
 public enum SweetStatus
 {
-    Payed,
+    PendingForPay,
     PendingForAccept,
-    PendingForPay
+    Payed,
 }
 
 public enum SweetAcceptance
 {
-    Accepted = 0,   
+    Accepted = 0,
     Rejected,
+    /// <summary>
+    /// این برای زمانی هست که کابر طرف های مورد نظر را به شیرینی اضاقه میکند و منتظر تایید و یا رد آن ها هست
+    /// </summary>
     Pending
-} 
+}

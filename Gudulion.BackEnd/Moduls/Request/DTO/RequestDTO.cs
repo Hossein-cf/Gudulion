@@ -8,13 +8,14 @@ public class RequestDto
     public int ToUserId { get; set; }
     public string Occasion { get; set; }
     public string Description { get; set; }
-
+    public RequestStatus RequestStatus { get; set; }
+    public RequestType RequestType { get; set; }
     public string Title { get; set; }
 }
 
 public class ChangeRequestStatusDTO
 {
-    public int Id { get; set; }
+    public int RequestId { get; set; }
     public RequestStatus OldStatus { get; set; }
     public RequestStatus NewStatus { get; set; }
 

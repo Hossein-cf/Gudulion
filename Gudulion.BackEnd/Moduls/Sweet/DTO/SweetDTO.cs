@@ -19,4 +19,5 @@ public class SweetSurveyDto
 public class SweetUserMappingDto : SweetSurveyDto
 {
     public bool IsPayer { get; set; }
+    
 }

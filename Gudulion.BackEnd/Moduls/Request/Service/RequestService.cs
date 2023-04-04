@@ -1,4 +1,4 @@
-using System.Transactions;
+using System.Diagnostics;
 using AutoMapper;
 using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Moduls.Comment.DTO;
@@ -6,7 +6,7 @@ using Gudulion.BackEnd.Moduls.Comment.Model;
 using Gudulion.BackEnd.Moduls.Comment.Service;
 using Gudulion.BackEnd.Moduls.Request.DTO;
 using Gudulion.BackEnd.Moduls.Request.Model;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Gudulion.BackEnd.Moduls.Sweet.Service;
 using Sweet.BackEnd.Exceprions;
 
 namespace Gudulion.BackEnd.Moduls.Request.Service;
@@ -16,18 +16,22 @@ public class RequestService : IRequestService
     private readonly ICommentService _commentService;
     private readonly MainDbContext db;
     private readonly IMapper _mapper;
+    private readonly ISweetService _sweetService;
 
-    public RequestService(ICommentService commentService, MainDbContext context, IMapper mapper)
+    public RequestService(ICommentService commentService, MainDbContext context, IMapper mapper,
+        ISweetService sweetService)
     {
         _commentService = commentService;
         db = context;
         _mapper = mapper;
+        _sweetService = sweetService;
     }
 
     public Request.Model.Request Create(RequestDto dto)
     {
         var request = _mapper.Map<Model.Request>(dto);
-
+        request.AddDate = DateTime.Now;
+        GenerateTrackingCode(request);
         db.Requests.Add(request);
         db.SaveChanges();
         return request;
@@ -35,18 +39,24 @@ public class RequestService : IRequestService
 
     public void ChangeStatus(ChangeRequestStatusDTO dto)
     {
-        var request = db.Requests.Find(dto.Id);
+        var request = db.Requests.Find(dto.RequestId);
         if (request == null)
         {
-            // todo throw exception 
+            throw new NotFoundException("request not found");
         }
+
+        request.RequestStatus = dto.NewStatus;
+        request.AcceptOrRejectDate = DateTime.Now;
+
+        db.SaveChanges();
 
         switch (dto.OldStatus)
         {
             case RequestStatus.Pending:
                 if (dto.NewStatus == RequestStatus.Accepted)
                 {
-                    //todo در این قسمت باید با توجه به وضعیت درخواست ششیرینی ایجاد میشود 
+                    // در این قسمت باید با توجه به وضعیت درخواست ششیرینی ایجاد میشود 
+                    _sweetService.CreateSweet(request);
                 }
                 else if (dto.NewStatus == RequestStatus.Rejected)
                 {
@@ -54,7 +64,7 @@ public class RequestService : IRequestService
                     {
                         UserId = request.ToUserId,
                         EntityType = CommentEntityType.Request,
-                        EntityId = dto.Id,
+                        EntityId = dto.RequestId,
                         CommentMessage = dto.Message
                     };
                     _commentService.Add(comment);
@@ -64,25 +74,10 @@ public class RequestService : IRequestService
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        ChangeStatusCore(dto);
     }
 
-    private void ChangeStatusCore(ChangeRequestStatusDTO dto)
-    {
-        var request = db.Requests.Find(dto.Id);
-        if (request == null)
-        {
-            throw new NotFoundException("request not found");
-        }
 
-        request.RequestStatus = dto.NewStatus;
-        request.AcceptOrRejectDate = new DateTime();
-
-        db.SaveChanges();
-    }
-
-    public Comment.Model.Comment AddComment(AddOrUpDateCommentDTO dto)
+    private Comment.Model.Comment AddComment(AddOrUpDateCommentDTO dto)
     {
         dto.EntityType = CommentEntityType.Request;
         var comment = _commentService.Add(dto);
@@ -91,7 +86,7 @@ public class RequestService : IRequestService
 
     public void Survey(SurveyDto dto)
     {
-        //todo نظر سنجی برای درخواست ذر این قسمت انجام میشود
+        // نظر سنجی برای درخواست ذر این قسمت انجام میشود
         var userReqMapping = new UserRequestMapping
         {
             UserId = dto.UserId,
@@ -111,9 +106,44 @@ public class RequestService : IRequestService
             _commentService.Add(addCommentDto);
         }
 
-        db.RequestMappings.Add(userReqMapping);
+        db.UserRequestMappings.Add(userReqMapping);
         db.SaveChanges();
-        throw new NotImplementedException();
+        // throw new NotImplementedException();
+    }
+
+    private void GenerateTrackingCode(Request.Model.Request request)
+    {
+        var prefix = "";
+        var suffix = 0;
+        switch (request.RequestType)
+        {
+            case RequestType.Shirini:
+                prefix = "RSH";
+                break;
+            case RequestType.Gheramat:
+                prefix = "RGH";
+
+                break;
+            case RequestType.Xorma:
+                prefix = "RX";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        var requestFromDb = db.Requests.Where(a => a.RequestType == request.RequestType).OrderBy(a => a.TrackingCode)
+            .LastOrDefault();
+        if (requestFromDb == null)
+        {
+            suffix = 1;
+        }
+        else
+        {
+            var args = requestFromDb.TrackingCode.Split('-');
+            suffix = Int32.Parse(args[1]) + 1;
+        }
+
+        request.TrackingCode = prefix + "-" + suffix.ToString().PadLeft(4, '0');
     }
 }
 
@@ -124,5 +154,5 @@ public interface IRequestService
     public void ChangeStatus(ChangeRequestStatusDTO dto);
 
     public void Survey(SurveyDto dto);
-    public Comment.Model.Comment AddComment(AddOrUpDateCommentDTO dto);
+    // public Comment.Model.Comment AddComment(AddOrUpDateCommentDTO dto);
 }

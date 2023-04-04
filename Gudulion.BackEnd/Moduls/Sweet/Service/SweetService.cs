@@ -16,16 +16,55 @@ public class SweetService : ISweetService
 
     public Model.Sweet CreateSweet(Request.Model.Request request)
     {
+        var requestFromDb = _context.Sweets.FirstOrDefault(x => x.RequestId == request.Id);
+        if (requestFromDb != null)
+        {
+            throw new Exception("Sweet already exists");
+        }
+
         var sweet = new Model.Sweet();
         sweet.Title = request.Title;
         sweet.Occasion = request.Occasion;
-        sweet.AddDate = new DateTime();
+        sweet.AddDate = DateTime.Now;
         sweet.Type = GetSweetType(request.RequestType);
         sweet.Status = SweetStatus.PendingForPay;
+        sweet.TrackingCode = GenerateTrackingCode(request);
+        sweet.RequestId = request.Id;
         _context.Sweets.Add(sweet);
         _context.SaveChanges();
+
+        AddUserToSweet(new SweetUserMappingDto
+        {
+            UserId = request.ToUserId,
+            IsPayer = true,
+            Acceptance = SweetAcceptance.Accepted,
+            SweetId = sweet.Id
+        });
         return sweet;
     }
+
+    private string GenerateTrackingCode(Request.Model.Request request)
+    {
+        var code = request.TrackingCode;
+        switch (request.RequestType)
+        {
+            case RequestType.Shirini:
+                code = code.Replace("RSH", "SH");
+                break;
+            case RequestType.Gheramat:
+                code = code.Replace("RGH", "GH");
+
+                break;
+            case RequestType.Xorma:
+                code = code.Replace("RX", "X");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        return code;
+    }
+
 
     public Model.Sweet ChangeStatus(SweetChangeStatusDto dto)
     {
@@ -33,7 +72,7 @@ public class SweetService : ISweetService
         sweet.Status = dto.NewStatus;
         if (dto.NewStatus == SweetStatus.Payed)
         {
-            sweet.PayDate = new DateTime();
+            sweet.PayDate = DateTime.Now;
         }
 
         _context.SaveChanges();
@@ -49,22 +88,50 @@ public class SweetService : ISweetService
             userSweetMapp.Acceptance = dto.Acceptance;
             _context.SaveChanges();
         }
+        else
+        {
+            throw new Exception("کاربر قبلا نظر داده است.");
+        }
     }
 
     public void AddUserToSweet(List<SweetUserMappingDto> dtos)
     {
-        dtos.ForEach(a =>
+        // todo edit list of mapped does not work currently
+        // because when user want to edit list this method does not work.
+        // i should to edit this method to handel edit action 
+        dtos.ForEach(dto =>
+        {
+            AddUserToSweetCore(dto);
+          
+        });
+        _context.SaveChanges();
+    }
+
+    public void AddUserToSweet(SweetUserMappingDto dto)
+    {
+        AddUserToSweetCore(dto);
+        _context.SaveChanges();
+    }
+
+    private void AddUserToSweetCore(SweetUserMappingDto dto)
+    {
+        var obj = _context.UserSweetMappigns.FirstOrDefault(a => a.UserId == dto.UserId && a.SweetId == dto.SweetId);
+        if (obj != null)
+        {
+            obj.IsPayer = dto.IsPayer;
+            obj.Acceptance = dto.Acceptance;
+        }
+        else
         {
             var userSweetMapping = new UserSweetMapping
             {
-                SweetId = a.SweetId,
-                UserId = a.UserId,
-                IsPayer = a.IsPayer,
-                Acceptance = a.Acceptance
+                SweetId = dto.SweetId,
+                UserId = dto.UserId,
+                IsPayer = dto.IsPayer,
+                Acceptance = dto.Acceptance
             };
             _context.UserSweetMappigns.Add(userSweetMapping);
-        });
-        _context.SaveChanges();
+        }
     }
 
     private SweetType GetSweetType(RequestType requestType)
@@ -88,4 +155,8 @@ public interface ISweetService
 {
     public Model.Sweet CreateSweet(Request.Model.Request request);
     public Model.Sweet ChangeStatus(SweetChangeStatusDto dto);
+    public void Survey(SweetSurveyDto dto);
+
+    public void AddUserToSweet(List<SweetUserMappingDto> dtos);
+    public void AddUserToSweet(SweetUserMappingDto dto);
 }
