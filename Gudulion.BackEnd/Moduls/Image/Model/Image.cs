@@ -7,8 +7,8 @@ public class Image : IEntityWithId
     public int Id { get; set; }
     public string Name { get; set; }
     public string ImageType { get; set; }
-    
-    public RelatedEntityType RelatedEntityType { get; set; }
+    public int EntityId { get; set; }
+    public RelatedEntityType EntityType { get; set; }
 }
 
 public enum RelatedEntityType

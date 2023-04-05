@@ -1,21 +1,20 @@
-﻿using Gudulion.BackEnd.Controllers;
-using Gudulion.BackEnd.DB;
+﻿using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Moduls.Comment.DTO;
 using Gudulion.BackEnd.Moduls.Trip.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Gudulion.BackEnd.Moduls.Trip.Controller;
 
+[Route("api/[controller]/[action]")]
+[ApiController]
 [Authorize]
-
-public class TripController : GenericController<Trip.Model.Trip>
+public class TripController:ControllerBase
 {
     private readonly MainDbContext _context;
     private readonly ITripService _tripService;
 
-    public TripController(MainDbContext context,ITripService tripService) : base(context)
+    public TripController(MainDbContext context, ITripService tripService)
     {
         _context = context;
         _tripService = tripService;
@@ -23,9 +22,9 @@ public class TripController : GenericController<Trip.Model.Trip>
 
     [HttpPost]
     [Authorize(Roles = "GroupAdmin")]
-    public override ActionResult<Trip.Model.Trip> Create(Trip.Model.Trip entity)
+    public  ActionResult Create(Trip.Model.Trip entity)
     {
-        return base.Create(entity);
+        return Ok();
     }
 
     /// <summary>
@@ -36,16 +35,16 @@ public class TripController : GenericController<Trip.Model.Trip>
     /// <returns></returns>
     [HttpPut("{id}")]
     [Authorize(Roles = "GroupAdmin")]
-    public override async Task<ActionResult<Trip.Model.Trip>> Update(int id, Trip.Model.Trip entity)
+    public ActionResult Update(int id, Trip.Model.Trip entity)
     {
-        return await base.Update(id, entity);
+        return Ok();
     }
 
     [HttpDelete("{id}")]
     [Authorize(Roles = "GroupAdmin")]
-    public override async Task<ActionResult<Trip.Model.Trip>> Delete(int id)
+    public ActionResult Delete(int id)
     {
-        return await base.Delete(id);
+        return Ok();
     }
 
     [HttpPost]

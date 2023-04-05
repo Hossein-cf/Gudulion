@@ -22,6 +22,7 @@ public class MainDbContext : DbContext
     public DbSet<TransactionItem> TransactionItems { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<Trip> Trips { get; set; }
+    public DbSet<UserTripMapping> UserTripMappings { get; set; }
 
 
     public MainDbContext(DbContextOptions<MainDbContext> options)
@@ -84,12 +85,29 @@ public class MainDbContext : DbContext
             .HasConversion(new EnumToStringConverter<Gender>());
         modelBuilder
             .Entity<Image>()
-            .Property(d => d.RelatedEntityType)
+            .Property(d => d.EntityType)
             .HasConversion(new EnumToStringConverter<RelatedEntityType>());
+
+        modelBuilder
+            .Entity<Trip>()
+            .Property(d => d.Status)
+            .HasConversion(new EnumToStringConverter<TripStatus>());
+        modelBuilder
+            .Entity<UserTripMapping>()
+            .HasOne<User>().WithMany().HasForeignKey(a => a.UserId);
+        modelBuilder
+            .Entity<UserTripMapping>()
+            .HasOne<Trip>().WithMany().HasForeignKey(a => a.TripId);
+
+        modelBuilder
+            .Entity<Transaction>()
+            .Property(a => a.TransactionStatus
+            ).HasConversion(new EnumToStringConverter<TransactionStatus>());
     }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.UseLazyLoadingProxies();
     }
 }

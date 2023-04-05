@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Gudulion.BackEnd.Moduls.Request.Service;
 using Gudulion.BackEnd.Moduls.Sweet.Service;
+using Gudulion.BackEnd.Moduls.Transaction.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -27,10 +28,9 @@ public class GlobalInjector
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<IImageService, ImageService>();
         builder.Services.AddScoped<ITripService, TripService>();
-        // builder.Services.AddScoped<ITripService, TripService>();
         builder.Services.AddScoped<IRequestService, RequestService>();
         builder.Services.AddScoped<ICommentService, CommentService>();
         builder.Services.AddScoped<ISweetService, SweetService>();
-        // builder.Services.AddScoped<IMapper, MyMapper>();
+        builder.Services.AddScoped<ITransactionService, TransactionService>();
     }
 }

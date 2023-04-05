@@ -1,17 +1,23 @@
+using AutoMapper;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Moduls.Image.Model;
 using Gudulion.BackEnd.Moduls.Request.Model;
 using Gudulion.BackEnd.Moduls.Sweet.DTO;
 using Gudulion.BackEnd.Moduls.Sweet.Model;
+using Microsoft.EntityFrameworkCore;
+using Sweet.BackEnd.Exceprions;
 
 namespace Gudulion.BackEnd.Moduls.Sweet.Service;
 
 public class SweetService : ISweetService
 {
     private readonly MainDbContext _context;
+    private readonly IMapper _mapper;
 
-    public SweetService(MainDbContext context)
+    public SweetService(MainDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public Model.Sweet CreateSweet(Request.Model.Request request)
@@ -99,11 +105,7 @@ public class SweetService : ISweetService
         // todo edit list of mapped does not work currently
         // because when user want to edit list this method does not work.
         // i should to edit this method to handel edit action 
-        dtos.ForEach(dto =>
-        {
-            AddUserToSweetCore(dto);
-          
-        });
+        dtos.ForEach(dto => { AddUserToSweetCore(dto); });
         _context.SaveChanges();
     }
 
@@ -111,6 +113,24 @@ public class SweetService : ISweetService
     {
         AddUserToSweetCore(dto);
         _context.SaveChanges();
+    }
+
+    public SweetWithAllData getById(int id)
+    {
+        var sweetWithAllData = new SweetWithAllData();
+        var sweet = _context.Sweets.FirstOrDefault(x => x.Id == id);
+        if (sweet == null)
+        {
+            throw new NotFoundException("Sweet not found");
+        }
+
+        sweetWithAllData = _mapper.Map<SweetWithAllData>(sweet);
+
+        var userMappings = _context.UserSweetMappigns.Where(a => a.SweetId == id).Include(a => a.User).ToList();
+        sweetWithAllData.Users = userMappings;
+        var images = _context.Images.Where(a => a.EntityType == RelatedEntityType.Sweet && a.EntityId == id).ToList();
+        sweetWithAllData.Images = images;
+        return sweetWithAllData;
     }
 
     private void AddUserToSweetCore(SweetUserMappingDto dto)
@@ -159,4 +179,5 @@ public interface ISweetService
 
     public void AddUserToSweet(List<SweetUserMappingDto> dtos);
     public void AddUserToSweet(SweetUserMappingDto dto);
+    public SweetWithAllData getById(int id);
 }

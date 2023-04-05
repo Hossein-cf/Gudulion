@@ -1,58 +1,20 @@
-using Gudulion.BackEnd.DB;
-using Gudulion.BackEnd.Helpers;
-using Gudulion.BackEnd.Moduls.Comment.Service;
 using Gudulion.BackEnd.Moduls.Request.DTO;
 using Gudulion.BackEnd.Moduls.Request.Model;
-using Gudulion.BackEnd.Moduls.Request.Service;
-using Gudulion.BackEnd.Moduls.Sweet.DTO;
-using Gudulion.BackEnd.Moduls.Sweet.Model;
-using Gudulion.BackEnd.Moduls.Sweet.Service;
-using Gudulion.BackEnd.Moduls.User.Service;
-using Microsoft.EntityFrameworkCore;
+using Gudulion.BackEnd.Moduls.User;
+using Gudulion.BackEnd.Test;
 using NUnit.Framework;
 
-namespace Gudulion.BackEnd.Moduls.User.Test;
+namespace Gudulion.BackEnd.Test;
 
-[TestFixture]
-public class UserTest
+[TestFixture, Order(2)]
+public class UserTest : TestGeneric
 {
-    private IServiceProvider serviceProvider;
-    private MainDbContext? _db;
-    private IRequestService? _requestService;
-    private ISweetService? _sweetService;
-    private IUserService? _userService;
-
-    [SetUp]
-    public void SetUp()
-    {
-        var service = new ServiceCollection();
-        service.AddDbContext<MainDbContext>(opt =>
-        {
-            opt.UseSqlServer(
-                "Server=localhost,1433;Database=Gudulion;User ID=sa;Password=6230064227husyn.cf;TrustServerCertificate=True;MultipleActiveResultSets=true");
-        });
-        service.AddTransient<IHash, Hash>();
-        service.AddHttpContextAccessor();
-        service.AddTransient<IUserService, UserService>();
-        service.AddTransient<ICommentService, CommentService>();
-        service.AddAutoMapper(typeof(UserTest).Assembly);
-        service.AddTransient<IRequestService, RequestService>();
-        service.AddTransient<ISweetService, SweetService>();
-        service.AddLogging();
-        serviceProvider = service.BuildServiceProvider();
-
-        _db = serviceProvider.GetService<MainDbContext>();
-        _requestService = serviceProvider.GetService<IRequestService>();
-        _userService = serviceProvider.GetService<IUserService>();
-        _sweetService = serviceProvider.GetService<ISweetService>();
-    }
-
-    [Test, Order(0)]
+    [Test, Order(1)]
     public void AddUser()
     {
-        var users = new List<User>
+        var users = new List<Moduls.User.User>
         {
-            new User
+            new Moduls.User.User()
             {
                 Name = "Hossein",
                 UserName = "Hossein",
@@ -63,7 +25,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "AliIsazadeh",
                 UserName = "AliIsazadeh",
@@ -74,7 +36,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "AliNaseri",
                 UserName = "AliNaseri",
@@ -85,7 +47,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "AliForghani",
                 UserName = "AliForghani",
@@ -96,7 +58,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "Mahdi",
                 UserName = "Mahdi",
@@ -107,7 +69,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "Tohid",
                 UserName = "Tohid",
@@ -118,7 +80,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "Yashar",
                 UserName = "Yashar",
@@ -129,7 +91,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "Amin",
                 UserName = "Amin",
@@ -140,7 +102,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "FatemeGhafoori",
                 UserName = "FatemeGhafoori",
@@ -151,7 +113,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "FatemeEsmati",
                 UserName = "FatemeEsmati",
@@ -162,7 +124,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "Hanu",
                 UserName = "Hanu",
@@ -173,7 +135,7 @@ public class UserTest
                 Email = "Shakryhsyn1@gmail.com",
                 PhoneNumber = "1234567890",
             },
-            new User
+            new Moduls.User.User
             {
                 Name = "Shadi",
                 UserName = "Shadi",
@@ -188,138 +150,11 @@ public class UserTest
         users.ForEach(user => _userService?.Register(user));
     }
 
-    [Test, Order(1)]
+    [Test, Order(2)]
     public void Login()
     {
         var user = _userService?.Login("Hossein", "Hossein");
         Assert.IsNotNull(user);
         Console.WriteLine(user?.Name);
-    }
-
-    [Test, Order(2)]
-    public void AddRequest()
-    {
-        var dto = new RequestDto
-        {
-            Description = "Fore apply to university",
-            Title = "University",
-            Occasion = "Occasion",
-            RequestType = RequestType.Gheramat,
-            FromUserId = 1,
-            ToUserId = 6,
-            RequestStatus = RequestStatus.Pending,
-        };
-
-        var dto1 = new RequestDto
-        {
-            Description = "Fore apply to university",
-            Title = "University",
-            Occasion = "Occasion",
-            RequestType = RequestType.Shirini,
-            FromUserId = 1,
-            ToUserId = 7,
-            RequestStatus = RequestStatus.Pending,
-        };
-
-        _requestService?.Create(dto);
-        _requestService?.Create(dto1);
-        Assert.IsNotNull(dto);
-    }
-
-    [Test, Order(3)]
-    public void SurveyRequest()
-    {
-        var dtos = new List<SurveyDto>()
-        {
-            new SurveyDto
-            {
-                UserId = 3,
-                Status = RequestStatus.Accepted,
-                RequestId = 1
-            },
-            new SurveyDto
-            {
-                UserId = 4,
-                Status = RequestStatus.Rejected,
-                RequestId = 1,
-                Message = "This is a message For Reject Request 1"
-            }
-        };
-        dtos.ForEach(dto => _requestService?.Survey(dto));
-    }
-
-    [Test, Order(4)]
-    public void ChangeRequestStatus()
-    {
-        var dto = new ChangeRequestStatusDTO
-        {
-            RequestId = 1,
-            NewStatus = RequestStatus.Accepted,
-            OldStatus = RequestStatus.Pending,
-        };
-        _requestService?.ChangeStatus(dto);
-    }
-
-    [Test, Order(5)]
-    public void AddUserToSweet()
-    {
-        var dtos = new List<SweetUserMappingDto>()
-        {
-            new SweetUserMappingDto
-            {
-                UserId = 1,
-                Acceptance = SweetAcceptance.Pending,
-                SweetId = 1,
-            },
-            new SweetUserMappingDto
-            {
-                UserId = 2,
-                Acceptance = SweetAcceptance.Pending,
-                SweetId = 1,
-            },
-            new SweetUserMappingDto
-            {
-                UserId = 3,
-                Acceptance = SweetAcceptance.Pending,
-                SweetId = 1,
-            },
-            new SweetUserMappingDto
-            {
-                UserId = 4,
-                Acceptance = SweetAcceptance.Pending,
-                SweetId = 1,
-            },
-        };
-        _sweetService?.AddUserToSweet(dtos);
-    }
-
-    [Test, Order(6)]
-    public void SurveyToSweet()
-    {
-        var dto = new SweetSurveyDto
-        {
-            UserId = 1,
-            SweetId = 1,
-            Acceptance = SweetAcceptance.Accepted,
-        };
-        _sweetService?.Survey(dto);
-        var dto1 = new SweetSurveyDto
-        {
-            UserId = 3,
-            SweetId = 1,
-            Acceptance = SweetAcceptance.Rejected,
-        };
-        _sweetService?.Survey(dto1);
-    }
-
-    [Test, Order(7)]
-    public void ChangeSweetStatus()
-    {
-        var dto = new SweetChangeStatusDto
-        {
-            Id = 1,
-            NewStatus = SweetStatus.Payed,
-        };
-        _sweetService?.ChangeStatus(dto);
     }
 }

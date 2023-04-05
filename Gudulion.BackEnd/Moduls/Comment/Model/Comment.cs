@@ -8,7 +8,7 @@ public class Comment:IEntityWithId
     public string Description { get; set; }
     public DateTime Date { get; set; }
     public int UserId { get; set; }
-    public User.User User { get; set; }
+    public virtual User.User User { get; set; }
     public CommentEntityType CommentEntityType { get; set; }
     public int EntityId { get; set; } 
     

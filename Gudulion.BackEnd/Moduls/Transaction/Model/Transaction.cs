@@ -6,10 +6,12 @@ public class Transaction : IEntityWithId
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public User.User User { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime ConfirmedDate { get; set; }
+    public virtual User.User User { get; set; }
     public int TripId { get; set; }
-    public Trip.Model.Trip Trip { get; set; }
-    public List<TransactionItem> TransactionItems { get; set; }
+    public virtual Trip.Model.Trip Trip { get; set; }
+    public virtual ICollection<TransactionItem> TransactionItems { get; set; }
     public TransactionStatus TransactionStatus { get; set; }
 }
 

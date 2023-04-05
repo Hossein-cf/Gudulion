@@ -19,5 +19,11 @@ public class SweetSurveyDto
 public class SweetUserMappingDto : SweetSurveyDto
 {
     public bool IsPayer { get; set; }
-    
+}
+
+public class SweetWithAllData : Sweet.Model.Sweet
+
+{
+    public List<UserSweetMapping> Users { get; set; }
+    public List<Image.Model.Image> Images { get; set; }
 }

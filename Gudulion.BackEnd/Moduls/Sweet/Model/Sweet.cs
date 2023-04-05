@@ -13,7 +13,7 @@ public class Sweet : IEntityWithId
     public DateTime PayDate { get; set; }
     public SweetStatus Status { get; set; }
 
-    public Request.Model.Request Request { get; set; }
+    public virtual Request.Model.Request Request { get; set; }
     public int RequestId { get; set; }
 }
 
@@ -21,9 +21,9 @@ public class UserSweetMapping
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public User.User User { get; set; }
+    public virtual User.User User { get; set; }
     public int SweetId { get; set; }
-    public Sweet Sweet { get; set; }
+    public virtual Sweet Sweet { get; set; }
     public bool IsPayer { get; set; }
     public SweetAcceptance Acceptance { get; set; }
 }
@@ -46,6 +46,7 @@ public enum SweetAcceptance
 {
     Accepted = 0,
     Rejected,
+
     /// <summary>
     /// این برای زمانی هست که کابر طرف های مورد نظر را به شیرینی اضاقه میکند و منتظر تایید و یا رد آن ها هست
     /// </summary>

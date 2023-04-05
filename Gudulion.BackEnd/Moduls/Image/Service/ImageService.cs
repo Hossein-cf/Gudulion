@@ -19,7 +19,7 @@ public class ImageService : IImageService
         {
             var image = new Model.Image();
             image.ImageType = imageWithData.ImageType;
-            image.RelatedEntityType = imageWithData.RelatedEntityType;
+            image.EntityType = imageWithData.RelatedEntityType;
             image.Name = $"{Guid.NewGuid()}{GetImageSuffix(image.ImageType)}";
 
             // Combine the file path with the generated filename
@@ -58,7 +58,7 @@ public class ImageService : IImageService
     public ImageWithData Get(ImageEntity imageEntity)
     {
         var image = _dbContext.Images
-            .FirstOrDefault(x => x.Id == imageEntity.Id && x.RelatedEntityType == imageEntity.RelatedEntityType);
+            .FirstOrDefault(x => x.Id == imageEntity.Id && x.EntityType == imageEntity.RelatedEntityType);
         if (image == null)
         {
             throw new NotFoundException("Image not found");
@@ -90,7 +90,7 @@ public class ImageService : IImageService
     public void Delete(ImageEntity imageEntity)
     {
         var image = _dbContext.Images
-            .FirstOrDefault(a => a.Id == imageEntity.Id && a.RelatedEntityType == imageEntity.RelatedEntityType);
+            .FirstOrDefault(a => a.Id == imageEntity.Id && a.EntityType == imageEntity.RelatedEntityType);
         if (image == null)
         {
             throw new NotFoundException("Image not found");

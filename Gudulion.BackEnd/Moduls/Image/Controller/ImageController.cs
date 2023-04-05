@@ -1,5 +1,4 @@
-﻿using Gudulion.BackEnd.Controllers;
-using Gudulion.BackEnd.DB;
+﻿using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Moduls.Image.DTO;
 using Gudulion.BackEnd.Moduls.Image.Service;
 using Microsoft.AspNetCore.Authorization;

@@ -7,9 +7,9 @@ public class Request : IEntityWithId
     public int Id { get; set; }
     public string Title { get; set; }
     public int FromUserId { get; set; }
-    public User.User FromUser { get; set; }
+    public virtual User.User FromUser { get; set; }
     public int ToUserId { get; set; }
-    public User.User ToUser { get; set; }
+    public virtual User.User ToUser { get; set; }
     public string Occasion { get; set; }
 
     public string Description { get; set; }
