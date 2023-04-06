@@ -7,7 +7,7 @@ namespace Gudulion.BackEnd.Moduls.User.Controller;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-[Authorize]
+[Authorize(Roles = "GroupAdmin")]
 public class UserController : ControllerBase
 {
     private readonly MainDbContext _context;
@@ -20,9 +20,16 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "GroupAdmin")]
-    public ActionResult<User> Create(User entity)
+    public IActionResult Create(User entity)
     {
-        return _userService.Register(entity);
+        var user = _userService.Register(entity);
+        return Ok(user);
+    }
+
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        var users = _userService.GetAll();
+        return Ok(users);
     }
 }

@@ -1,6 +1,6 @@
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Moduls.Image.DTO;
-using Sweet.BackEnd.Exceprions;
 
 namespace Gudulion.BackEnd.Moduls.Image.Service;
 
@@ -20,6 +20,7 @@ public class ImageService : IImageService
             var image = new Model.Image();
             image.ImageType = imageWithData.ImageType;
             image.EntityType = imageWithData.RelatedEntityType;
+            image.EntityId = imageWithData.EntityId;
             image.Name = $"{Guid.NewGuid()}{GetImageSuffix(image.ImageType)}";
 
             // Combine the file path with the generated filename
@@ -57,13 +58,15 @@ public class ImageService : IImageService
 
     public ImageWithData Get(ImageEntity imageEntity)
     {
+        //todo
         var image = _dbContext.Images
-            .FirstOrDefault(x => x.Id == imageEntity.Id && x.EntityType == imageEntity.RelatedEntityType);
+            .FirstOrDefault(x =>
+                x.Id == imageEntity.ImageId && x.EntityId == imageEntity.EntityId &&
+                x.EntityType == imageEntity.RelatedEntityType);
         if (image == null)
         {
             throw new NotFoundException("Image not found");
         }
-
         try
         {
             // Combine the file path with the requested filename
@@ -90,7 +93,9 @@ public class ImageService : IImageService
     public void Delete(ImageEntity imageEntity)
     {
         var image = _dbContext.Images
-            .FirstOrDefault(a => a.Id == imageEntity.Id && a.EntityType == imageEntity.RelatedEntityType);
+            .FirstOrDefault(a =>
+                a.Id == imageEntity.ImageId && a.EntityId == imageEntity.EntityId &&
+                a.EntityType == imageEntity.RelatedEntityType);
         if (image == null)
         {
             throw new NotFoundException("Image not found");
@@ -108,6 +113,12 @@ public class ImageService : IImageService
             throw new Exception(e.Message);
         }
     }
+
+    public List<Model.Image> GetImageByEntityId(int entityId)
+    {
+        var images = _dbContext.Images.Where(a => a.EntityId == entityId).ToList();
+        return images;
+    }
 }
 
 public interface IImageService
@@ -115,4 +126,5 @@ public interface IImageService
     public Model.Image Save(ImageWithData image);
     public ImageWithData Get(ImageEntity imageEntity);
     public void Delete(ImageEntity imageEntity);
+    public List<Model.Image> GetImageByEntityId(int entityId);
 }

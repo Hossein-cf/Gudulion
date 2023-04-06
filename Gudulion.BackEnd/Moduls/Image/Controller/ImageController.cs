@@ -37,4 +37,11 @@ public class ImageController : ControllerBase
         _imageService.Delete(imageEntity);
         return Ok();
     }
+
+    [HttpGet]
+    public IActionResult GetAllByEntityId([FromQuery] int entityId)
+    {
+        var images = _imageService.GetImageByEntityId(entityId);
+        return Ok(images);
+    }
 }

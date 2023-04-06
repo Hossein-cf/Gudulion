@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
 
-namespace Sweet.BackEnd.Exceprions;
+namespace Gudulion.BackEnd.Exceptions;
 
 public class NotFoundException : Exception
 {
@@ -9,9 +10,9 @@ public class NotFoundException : Exception
     }
 }
 
-public class UserAlreadyExistException : Exception
+public class AlreadyExistException : Exception
 {
-    public UserAlreadyExistException(string message) : base(message)
+    public AlreadyExistException(string message) : base(message)
     {
     }
 }
@@ -25,8 +26,6 @@ public class UnauthorizedException : Exception
     public UnauthorizedException(string message, Exception innerException) : base(message, innerException)
     {
     }
-
-    
 }
 
 public class ExceptionManager
@@ -41,6 +40,18 @@ public class ExceptionManager
                 if (ex is UnauthorizedException)
                 {
                     context.Response.StatusCode = 401;
+                    context.Response.ContentType = "text/plain";
+                    await context.Response.WriteAsync(ex.Message);
+                }
+                else if (ex is NotFoundException)
+                {
+                    context.Response.StatusCode = 404;
+                    context.Response.ContentType = "text/plain";
+                    await context.Response.WriteAsync(ex.Message);
+                }
+                else if (ex is AlreadyExistException)
+                {
+                    context.Response.StatusCode = 409;
                     context.Response.ContentType = "text/plain";
                     await context.Response.WriteAsync(ex.Message);
                 }

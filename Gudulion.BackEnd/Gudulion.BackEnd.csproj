@@ -45,9 +45,7 @@
 
     <ItemGroup>
         <Folder Include="Assets\Images" />
-        <Folder Include="Controllers" />
         <Folder Include="Migrations" />
-        <Folder Include="Moduls" />
         <Folder Include="Moduls\User\DTO" />
     </ItemGroup>
 

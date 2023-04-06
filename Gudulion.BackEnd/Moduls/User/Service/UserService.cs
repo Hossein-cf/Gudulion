@@ -1,7 +1,8 @@
 ﻿using System.Security.Claims;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Helpers;
-using Sweet.BackEnd.Exceprions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Gudulion.BackEnd.Moduls.User.Service;
 
@@ -11,7 +12,7 @@ public class UserService : IUserService
     private readonly IHash _hash;
     private readonly IHttpContextAccessor httpContext;
 
-    public UserService(MainDbContext context, IHash hash,IHttpContextAccessor httpContextAccessor)
+    public UserService(MainDbContext context, IHash hash, IHttpContextAccessor httpContextAccessor)
     {
         db = context;
         _hash = hash;
@@ -25,7 +26,7 @@ public class UserService : IUserService
         var userFromDb = db.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
         if (userFromDb != null)
         {
-            throw new UserAlreadyExistException("کاربر با این نام کاربری قبلا در سیستم ثبت نام کرده است.");
+            throw new AlreadyExistException("کاربر با این نام کاربری قبلا در سیستم ثبت نام کرده است.");
         }
 
         db.Users.Add(user);
@@ -53,6 +54,12 @@ public class UserService : IUserService
         var user = db.Users.FirstOrDefault(a => a.UserName == userName);
         return user;
     }
+
+    public List<User> GetAll()
+    {
+        var users = db.Users.ToList();
+        return users;
+    }
 }
 
 public interface IUserService
@@ -60,4 +67,5 @@ public interface IUserService
     public User Register(User user);
     public User Login(string userName, string password);
     public User GetCurrentUser();
+    public List<User> GetAll();
 }

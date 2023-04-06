@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using Gudulion.BackEnd.DB;
 using Gudulion.BackEnd.Moduls.User.Service;
 using Microsoft.AspNetCore.Mvc;
-using Sweet.BackEnd.Exceprions;
 using Sweet.BackEnd.Jwt;
 
 namespace Gudulion.BackEnd.Moduls.User.Controller;

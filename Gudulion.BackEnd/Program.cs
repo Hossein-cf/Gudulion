@@ -1,9 +1,8 @@
 using System.Reflection;
-using Sweet.BackEnd.Exceprions;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Helpers;
 using Sweet.BackEnd.Jwt;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +46,11 @@ builder.Services.AddSwaggerGen(opt =>
 
 //add authentication 
 JwtUtils.AddAuthentication(builder);
+
+// builder.Services.AddControllers(opt =>
+// {
+//     opt.Filters.Add<ExceptionFilter>();
+// });
 
 var app = builder.Build();
 

@@ -1,11 +1,11 @@
 using AutoMapper;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Moduls.Comment.DTO;
 using Gudulion.BackEnd.Moduls.Comment.Model;
 using Gudulion.BackEnd.Moduls.Comment.Service;
 using Gudulion.BackEnd.Moduls.Trip.DTO;
 using Gudulion.BackEnd.Moduls.Trip.Model;
-using Sweet.BackEnd.Exceprions;
 
 namespace Gudulion.BackEnd.Moduls.Trip.Service;
 

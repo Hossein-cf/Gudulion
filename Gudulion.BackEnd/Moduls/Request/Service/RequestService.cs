@@ -1,13 +1,15 @@
 using System.Diagnostics;
 using AutoMapper;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Moduls.Comment.DTO;
 using Gudulion.BackEnd.Moduls.Comment.Model;
 using Gudulion.BackEnd.Moduls.Comment.Service;
 using Gudulion.BackEnd.Moduls.Request.DTO;
 using Gudulion.BackEnd.Moduls.Request.Model;
 using Gudulion.BackEnd.Moduls.Sweet.Service;
-using Sweet.BackEnd.Exceprions;
+using Gudulion.BackEnd.Moduls.User;
+using Gudulion.BackEnd.Moduls.User.Service;
 
 namespace Gudulion.BackEnd.Moduls.Request.Service;
 
@@ -16,14 +18,17 @@ public class RequestService : IRequestService
     private readonly ICommentService _commentService;
     private readonly MainDbContext db;
     private readonly IMapper _mapper;
+    private readonly IUserService _userService;
     private readonly ISweetService _sweetService;
 
     public RequestService(ICommentService commentService, MainDbContext context, IMapper mapper,
+        IUserService userService,
         ISweetService sweetService)
     {
         _commentService = commentService;
         db = context;
         _mapper = mapper;
+        _userService = userService;
         _sweetService = sweetService;
     }
 
@@ -145,6 +150,18 @@ public class RequestService : IRequestService
 
         request.TrackingCode = prefix + "-" + suffix.ToString().PadLeft(4, '0');
     }
+
+    public List<Model.Request> GetUsersRequests(int userId)
+    {
+        var user = _userService.GetCurrentUser();
+        if (user.Role != Role.GroupAdmin || user.Id != userId)
+        {
+            throw new UnauthorizedAccessException();
+        }
+
+        var request = db.Requests.Where(a => a.FromUserId == userId || a.ToUserId == userId).ToList();
+        return request;
+    }
 }
 
 public interface IRequestService
@@ -154,5 +171,7 @@ public interface IRequestService
     public void ChangeStatus(ChangeRequestStatusDTO dto);
 
     public void Survey(SurveyDto dto);
+
+    public List<Model.Request> GetUsersRequests(int userId);
     // public Comment.Model.Comment AddComment(AddOrUpDateCommentDTO dto);
 }

@@ -1,8 +1,8 @@
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Moduls.Comment.DTO;
 using Gudulion.BackEnd.Moduls.User;
 using Gudulion.BackEnd.Moduls.User.Service;
-using Sweet.BackEnd.Exceprions;
 
 namespace Gudulion.BackEnd.Moduls.Comment.Service;
 
@@ -26,7 +26,7 @@ public class CommentService : ICommentService
         {
             Description = dto.CommentMessage,
             UserId = dto.UserId,
-            Date =  DateTime.Now,
+            Date = DateTime.Now,
             CommentEntityType = dto.EntityType,
             EntityId = dto.EntityId,
         };
@@ -35,16 +35,15 @@ public class CommentService : ICommentService
         return comment;
     }
 
-    public Model.Comment Edit(int id, AddOrUpDateCommentDTO dto)
+    public Model.Comment Upadate(int id, AddOrUpDateCommentDTO dto)
     {
-        var user = _userService.GetCurrentUser();
-
         var comment = db.Comments.Find(id);
         if (comment == null)
         {
             throw new NotFoundException("Comment not found");
         }
 
+        var user = _userService.GetCurrentUser();
         if (user.Id == comment.UserId || user.Role == Role.GroupAdmin)
         {
             comment.Description = dto.CommentMessage;
@@ -52,7 +51,7 @@ public class CommentService : ICommentService
         }
         else
         {
-            throw new Exception("You don't have permission to edit this comment");
+            throw new UnauthorizedException("You don't have permission to edit this comment");
         }
 
         return comment;
@@ -74,14 +73,21 @@ public class CommentService : ICommentService
         }
         else
         {
-            throw new Exception("You don't have permission to delete this comment");
+            throw new UnauthorizedException("You don't have permission to delete this comment");
         }
+    }
+
+    public List<Model.Comment> GetCommentsByEntityId(int entityId)
+    {
+        var comments = db.Comments.Where(a => a.EntityId == entityId).ToList();
+        return comments;
     }
 }
 
 public interface ICommentService
 {
     public Model.Comment Add(AddOrUpDateCommentDTO dto);
-    public Model.Comment Edit(int id, AddOrUpDateCommentDTO dto);
+    public Model.Comment Upadate(int id, AddOrUpDateCommentDTO dto);
     public void Delete(int id);
+    public List<Comment.Model.Comment> GetCommentsByEntityId(int entityId);
 }

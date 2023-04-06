@@ -1,8 +1,8 @@
 using AutoMapper;
 using Gudulion.BackEnd.DB;
+using Gudulion.BackEnd.Exceptions;
 using Gudulion.BackEnd.Moduls.Transaction.DTO;
 using Gudulion.BackEnd.Moduls.Transaction.Model;
-using Sweet.BackEnd.Exceprions;
 
 namespace Gudulion.BackEnd.Moduls.Transaction.Service;
 
@@ -43,10 +43,19 @@ public class TransactionService : ITransactionService
 
         _db.SaveChanges();
     }
+
+    public Model.Transaction GetTransactionByTripId(int tripId)
+    {
+        var transaction = _db.Transactions.FirstOrDefault(a => a.TripId == tripId);
+        return transaction;
+    }
 }
 
 public interface ITransactionService
 {
     public Model.Transaction Create(AddTransactionDto dto);
     public void ChangeTransactionStatus(ChangeTransactionStatusDto dto);
+    public Model.Transaction GetTransactionByTripId(int tripId);
+    
+    // todo add update transaction service
 }

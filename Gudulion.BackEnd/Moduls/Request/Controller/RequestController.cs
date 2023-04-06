@@ -1,5 +1,4 @@
-﻿
-using Gudulion.BackEnd.Moduls.Request.DTO;
+﻿using Gudulion.BackEnd.Moduls.Request.DTO;
 using Gudulion.BackEnd.Moduls.Request.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +12,7 @@ public class RequestController : ControllerBase
 {
     private readonly IRequestService _requestService;
 
-    public RequestController( IRequestService requestService) 
+    public RequestController(IRequestService requestService)
     {
         _requestService = requestService;
     }
@@ -37,5 +36,12 @@ public class RequestController : ControllerBase
     {
         _requestService.Survey(dto);
         return Ok();
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Model.Request>> GetUserRequest([FromQuery] int userId)
+    {
+        var usersRequests = _requestService.GetUsersRequests(userId);
+        return usersRequests;
     }
 }

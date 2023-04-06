@@ -21,5 +21,12 @@ public class SweetController : ControllerBase
     {
         return Ok(_sweetService.getById(id));
     }
+    [HttpGet]
+    [Authorize(Roles = "GroupAdmin")]
+    public IActionResult GetAll()
+    {
+        var sweets = _sweetService.GetAll();
+        return Ok(sweets);
+    }
     
 }
