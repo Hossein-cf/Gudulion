@@ -23,7 +23,7 @@ public class LoginRegister : ControllerBase
         return Ok(_userService.Register(user));
     }
 
-    [HttpPost]
+    [HttpGet]
     public IActionResult Login([FromQuery] string userName, [FromQuery] string password,
         [FromServices] IConfiguration configuration)
     {

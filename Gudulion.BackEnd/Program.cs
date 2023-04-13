@@ -4,7 +4,7 @@ using Gudulion.BackEnd.Helpers;
 using Sweet.BackEnd.Jwt;
 using Microsoft.OpenApi.Models;
 
-
+var policyName = "MyPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(opt =>
 {
-    opt.SwaggerDoc("v1", new OpenApiInfo() { Title = "Gudulion ", Version = "v1" });
+    opt.SwaggerDoc("v1", new OpenApiInfo() {Title = "Gudulion ", Version = "v1"});
     opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -31,11 +31,11 @@ builder.Services.AddSwaggerGen(opt =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
                 }
             },
-            new string[]{}
+            new string[] { }
         }
     });
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -44,6 +44,13 @@ builder.Services.AddSwaggerGen(opt =>
     // opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: MyAllowSpecificOrigins,
+        builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+});
 //add authentication 
 JwtUtils.AddAuthentication(builder);
 
@@ -61,6 +68,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(MyAllowSpecificOrigins);
 ExceptionManager.ExceptionHandler(app);
 
 app.UseHttpsRedirection();
