@@ -32,5 +32,6 @@ public class GlobalInjector
         builder.Services.AddScoped<ICommentService, CommentService>();
         builder.Services.AddScoped<ISweetService, SweetService>();
         builder.Services.AddScoped<ITransactionService, TransactionService>();
+        builder.Services.AddScoped<IDbService, DbService>();
     }
 }

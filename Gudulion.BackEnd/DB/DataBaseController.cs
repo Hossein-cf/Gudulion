@@ -6,23 +6,24 @@ namespace Gudulion.BackEnd.DB;
 [ApiController]
 public class DataBaseController : ControllerBase
 {
-    private readonly MainDbContext _mainDbContext;
+    private readonly IDbService _dbService;
 
-    public DataBaseController(MainDbContext mainDbContext)
+    public DataBaseController(IDbService dbService)
     {
-        _mainDbContext = mainDbContext;
+        _dbService = dbService;
     }
 
     [HttpPost]
     public IActionResult Create()
     {
-        _mainDbContext.Database.EnsureCreated();
+        _dbService.CreateDb();
         return Ok();
     }
+
     [HttpDelete]
     public IActionResult Delete()
     {
-        _mainDbContext.Database.EnsureDeleted();
+        _dbService.DeleteDb();
         return Ok();
     }
 }
